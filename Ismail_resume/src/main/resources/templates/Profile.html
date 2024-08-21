@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ismail Mansuri's Portfolio</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background-color: #121212;
+	color: #ffffff;
+}
+
+.sidebar {
+	position: fixed;
+	width: 220px;
+	height: 100%;
+	background-color: #1f1f1f;
+	padding-top: 20px;
+	text-align: center;
+	transition: width 0.3s;
+}
+
+.sidebar ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.sidebar ul li {
+	padding: 10px 0;
+}
+
+.sidebar ul li a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 18px;
+	display: block;
+	transition: color 0.3s, background-color 0.3s;
+	padding: 10px;
+	border-radius: 50px;
+}
+
+.sidebar ul li a i {
+	margin-right: 10px;
+}
+
+.sidebar ul li a:hover {
+	color: #1e90ff;
+	background-color: #333333;
+}
+
+.content {
+	margin-left: 240px;
+	padding: 20px;
+	transition: margin-left 0.3s;
+}
+
+.main-profile {
+	text-align: center;
+	margin-top: 5%;
+}
+
+.profile-pic {
+	width: 350px;
+	height: 350px;
+	border-radius: 50%;
+	border: 5px solid #1e90ff;
+}
+
+h1 {
+	font-size: 3em;
+	color: #1e90ff;
+	margin-top: 20px;
+}
+
+h2 {
+	color: #1e90ff;
+}
+
+section {
+	margin-bottom: 50px;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.6s, transform 0.6s;
+}
+
+section.show {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+p {
+	line-height: 1.6;
+	color: #d3d3d3;
+}
+
+/* Responsive design for mobile phones */
+@media ( max-width : 768px) {
+	.sidebar {
+		width: 100%;
+		height: auto;
+		position: relative;
+		padding-top: 0;
+	}
+	.sidebar ul {
+		display: none;
+		flex-direction: column;
+	}
+	.sidebar.open ul {
+		display: flex;
+	}
+	.menu-toggle {
+		display: block;
+		cursor: pointer;
+		font-size: 24px;
+		color: #ffffff;
+		padding: 10px;
+		background-color: #1f1f1f;
+		text-align: center;
+	}
+	.content {
+		margin-left: 0;
+		padding: 10px;
+	}
+	.main-profile {
+		margin-top: 5%;
+	}
+	.profile-pic {
+		width: 250px;
+		height: 250px;
+	}
+	h1 {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 1.5em;
+	}
+}
+
+.details {
+	display: none;
+	margin-top: 20px;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: #2b2b2b;
+	transition: border 0.3s; /* Add transition for border */
+}
+
+.details.show {
+	border: 2px solid #1e90ff; /* Add border when details are shown */
+}
+
+/* Improved Details Button */
+.toggle-details {
+	display: inline-block;
+	padding: 10px 20px;
+	font-size: 16px;
+	color: #ffffff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+	margin-bottom: 20px; /* Space between button and details */
+}
+
+/* Hover effect for the button */
+.toggle-details:hover {
+	background-color: #0056b3;
+	transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+/* Focus effect for the button */
+.toggle-details:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+/* Skills Section */
+#skills {
+	margin-bottom: 20px;
+	padding: 0px;
+	border-radius: 8px;
+}
+
+#skills h2 {
+	color: #1e90ff;
+	margin-bottom: 20px;
+}
+
+#skills ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+#skills ul li {
+	padding: 10px 0;
+	border-bottom: 1px solid #333333;
+}
+
+#skills ul li:last-child {
+	border-bottom: none;
+}
+
+/* Experience and Education Sections */
+.experience-item-container, .education-item-container {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: #2b2b2b;
+}
+
+.experience-item-content, .education-details {
+	flex: 1;
+	margin-right: 20px;
+}
+
+.experience-timeframe, .education-timeframe {
+	position: static;
+	text-align: right;
+	color: #d3d3d3;
+	min-width: 150px;
+}
+/* Project Section */
+.project-item-container {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: #2b2b2b;
+}
+
+.project-item-content {
+	flex: 1;
+	margin-right: 20px;
+}
+
+.project-item-content h3 {
+	margin-top: 0;
+	color: #1e90ff;
+}
+
+.project-timeframe {
+	text-align: right;
+	color: #d3d3d3;
+	min-width: 150px;
+}
+
+.project-link {
+	color: #1e90ff;
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.3s;
+}
+
+.project-link:hover {
+	color: #0056b3;
+}
+/* Contact Section */
+/* Contact Section */
+#contact {
+    margin-bottom: 50px;
+}
+
+#contact form {
+    background-color: #2b2b2b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#contact form .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form elements */
+}
+
+#contact form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d3d3d3;
+    font-weight: bold;
+}
+
+#contact form input[type="text"], 
+#contact form input[type="email"],
+#contact form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    margin-bottom: 10px;
+    margin-right:1000px;
+    font-size: 16px;
+     box-sizing: border-box;
+}
+
+#contact form textarea {
+    resize: vertical;
+    height: 100px;
+     padding-right: 15px; 
+
+}
+
+#contact form button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#contact form button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+#contact form .back-button {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+#contact form .back-button:hover {
+    color: #0056b3;
+}
+
+#contact p {
+    margin-bottom: 10px;
+}
+
+#contact a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+#contact a:hover {
+    color: #0056b3;
+}
+
+.arrow-list {
+    list-style: none; /* Remove default bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.arrow-list li {
+    display: flex; /* Flexbox to align items horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+.arrow-list li:before {
+    content: "→"; /* Arrow character */
+    margin-right: 8px; /* Space between arrow and text */
+    color: #1e90ff; /* Color of the arrow */
+    font-size: 18px; /* Size of the arrow */
+}
+
+.arrow-list li:first-child:before {
+    content: ""; /* Remove arrow for the first item */
+}
+</style>
+</head>
+
+<body>
+	<div class="sidebar">
+		<div class="menu-toggle">
+			<i class="fas fa-bars"></i>
+		</div>
+		<ul>
+			<li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+			<li><a href="#projects"><i class="fas fa-project-diagram"></i>
+					Projects</a></li>
+			<li><a href="#skills"><i class="fas fa-tools"></i> Skills</a></li>
+			<li><a href="#info"><i class="fas fa-info-circle"></i> Info</a></li>
+			<li><a href="#contact"><i class="fas fa-envelope"></i>
+					Contact</a></li>
+		</ul>
+	</div>
+
+	<div class="content">
+		<!-- Main Content -->
+		<div id="main-content" class="hidden">
+			<!-- Home Section -->
+			<section id="home">
+				<div class="main-profile">
+					<img src="/images/myphoto.jpg" alt="Ismail Mansuri"
+						class="profile-pic">
+					<h1>Ismail Mansuri</h1>
+				</div>
+			</section>
+
+			<!-- Experience Section -->
+			<section id="experience">
+				<h2>Experience</h2>
+				<button class="toggle-details" data-target="exp-details">Show
+					Details</button>
+				<div id="exp-details" class="details">
+					<div class="experience-item">
+						<div class="experience-item-container">
+							<div class="experience-item-content">
+								<h3>ConceptServe Technologies</h3>
+								<p>Java Developer · Internship</p>
+								<p>Purpose of Joining:- Learn Development in Java</p>
+								<p>Skills: SpringBoot, Hibernate, Devops</p>
+							</div>
+							<div class="experience-timeframe">
+								<p>Jun 2024 - Present</p>
+							</div>
+						</div>
+					</div>
+					<div class="experience-item">
+						<div class="experience-item-container">
+							<div class="experience-item-content">
+								<h3>BrainyBeam Technologies Pvt. Ltd.</h3>
+								<p>Django Intern · Internship</p>
+								<p>Purpose of Joining:- Start My journey in Development</p>
+								<p>Skills: Django, Python</p>
+							</div>
+							<div class="experience-timeframe">
+								<p>May 2024 - Jun 2024</p>
+								<p>2 months</p>
+							</div>
+						</div>
+					</div>
+					<div class="experience-item">
+						<div class="experience-item-container">
+							<div class="experience-item-content">
+								<h3>First Connect Health</h3>
+								<p>Associate Healthcare Recruiter · Full-time</p>
+								<p>Purpose of Joining:- Learn Communication Skill for
+									International Market</p>
+								<p>Skills: Communication, Fluency in English</p>
+							</div>
+							<div class="experience-timeframe">
+								<p>Feb 2024 - May 2024</p>
+								<p>4 months</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Education Section -->
+			<section id="education">
+				<h2>Education</h2>
+				<button class="toggle-details" data-target="edu-details">Show
+					Details</button>
+				<div id="edu-details" class="details">
+					<div class="education-item">
+						<div class="education-item-container">
+							<div class="education-details">
+								<h3>BCA - Asia Pacific College</h3>
+								<p>Currently studying at Gujarat University</p>
+								<p>3rd Year BCA</p>
+							</div>
+							<div class="education-timeframe">
+								<p>2022 - Current</p>
+							</div>
+						</div>
+					</div>
+					<div class="education-item">
+						<div class="education-item-container">
+							<div class="education-details">
+								<h3>12th Grade - Ankur School</h3>
+								<p>Gujarat Board</p>
+							</div>
+							<div class="education-timeframe">
+								<p>2022</p>
+							</div>
+						</div>
+					</div>
+					<div class="education-item">
+						<div class="education-item-container">
+							<div class="education-details">
+								<h3>10th Grade - GLS School</h3>
+								<p>Gujarat Board</p>
+							</div>
+							<div class="education-timeframe">
+								<p>2020</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Projects Section -->
+			<section id="projects">
+				<h2>Projects</h2>
+				<button class="toggle-details" data-target="pro-details">Show
+					Details</button>
+				<div id="pro-details" class="details">
+					<div class="project-item">
+						<div class="project-item-container">
+							<div class="project-item-content">
+								<h3>1. Spring Security Project</h3>
+								<p>
+									<strong>Details:</strong> Implemented security configurations,
+									custom authentication handlers, and secured REST APIs.
+								</p>
+								<p>
+									<a href="http://localhost:8090" target="_blank"
+										class="project-link">Try out my project</a>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="project-item">
+						<div class="project-item-container">
+							<div class="project-item-content">
+								<h3>2. Bank Management Application</h3>
+								<p>
+									<strong>Details:</strong> Implemented Hibernate, Data JPA and
+									Postgree Sql for Data Storage
+								</p>
+								<p>
+									<a href="http://localhost:8085" target="_blank"
+										class="project-link">Try out my project</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+
+			<!-- Skills Section -->
+			<section id="skills">
+				<h2>Skills</h2>
+				<button class="toggle-details" data-target="skills-details">Show
+					Details</button>
+				<div id="skills-details" class="details">
+					<ul>
+						<li>Java</li>
+						<li>Spring Boot</li>
+						<li>Spring</li>
+						<li>REST API</li>
+						<li>Microservices</li>
+						<li>Hibernate</li>
+						<li>MySQL</li>
+						<li>PostgreSQL</li>
+						<li>Cloud Storage</li>
+						<li>Deployment</li>
+					</ul>
+				</div>
+			</section>
+
+			<!-- Info Section -->
+			<!-- About Section -->
+			<!-- About Section -->
+			<section id="about">
+				<h2>About Me</h2>
+				<p>I'm Ismail Mansuri, a dedicated software developer with
+					expertise in Java, SpringBoot, Hibernate and Python. Currently pursuing a BCA at Asia
+					Pacific College, I've gained practical experience through
+					internships at ConceptServe Technologies (Java Developer) and
+					BrainyBeam Technologies (Django Intern). My skills include:</p>
+				<ul class="arrow-list">
+    <li>Java &rarr; Spring Boot &rarr; Rest API &rarr; MicroServices &rarr; Hibernate &rarr; PostgreSQL &rarr; MySQL &rarr; Deployment &rarr; Docker</li>
+</ul>
+
+			</section>
+
+
+			<!-- Contact Section -->
+			<section id="contact">
+    <h2>Contact</h2>
+    <p>Email: ismailmansury9737@gmail.com</p>
+    <p>
+        LinkedIn: <a href="https://www.linkedin.com/in/ismail62" target="_blank">linkedin.com/in/ismail62</a>
+    </p>
+
+    <!-- Contact Form -->
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <!-- Replace with your Access Key -->
+        <input type="hidden" name="access_key" value="610ab766-0a22-4922-9b13-d3d028b77ad6">
+        <!-- Form Inputs -->
+        <div class="form-container">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        <input type="hidden" name="redirect" value="http://192.168.1.99:8080/successfull">
+        <button type="submit">Submit Form</button>
+    </form>
+</section>
+
+
+		</div>
+	</div>
+
+	<script>
+
+	document.addEventListener("DOMContentLoaded", function () {
+	    const menuToggle = document.querySelector(".menu-toggle");
+	    const sidebar = document.querySelector(".sidebar");
+	    const mainContent = document.getElementById("main-content");
+	    const sections = document.querySelectorAll("section");
+
+	    // Toggle sidebar menu on mobile
+	    menuToggle.addEventListener("click", function () {
+	        sidebar.classList.toggle("open");
+	    });
+
+	    // Add show class for fade-in effect when sections enter the viewport
+	    const observer = new IntersectionObserver((entries) => {
+	        entries.forEach((entry) => {
+	            if (entry.isIntersecting) {
+	                entry.target.classList.add("show");
+	            }
+	        });
+	    }, { threshold: 0.1 });
+
+	    sections.forEach((section) => {
+	        observer.observe(section);
+	    });
+
+	    // Show/hide details for each section
+	    const toggleDetailsButtons = document.querySelectorAll(".toggle-details");
+
+	    toggleDetailsButtons.forEach((button) => {
+	        button.addEventListener("click", function () {
+	            const targetId = this.getAttribute("data-target");
+	            const targetElement = document.getElementById(targetId);
+
+	            if (targetElement.style.display === "none" || !targetElement.style.display) {
+	                targetElement.style.display = "block";
+	                targetElement.classList.add("show"); // Add 'show' class to add border
+	                this.textContent = "Hide Details";
+	            } else {
+	                targetElement.style.display = "none";
+	                targetElement.classList.remove("show"); // Remove 'show' class to remove border
+	                this.textContent = "Show Details";
+	            }
+	        });
+	    });
+
+	    // Reveal content after a delay (loading animation)
+	    setTimeout(() => {
+	        mainContent.classList.remove("hidden");
+	    }, 1000);
+	});
+
+    </script>
+</body>
+
+</html>
